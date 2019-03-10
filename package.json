@@ -1,0 +1,19 @@
+{
+	"name": "wiinode",
+	"version": "0.0.0",
+	"description": "",
+	"main": "lib/index.js",
+	"scripts": {
+		"build": "tsc src/index.ts --outDir lib",
+		"start": "node lib/index.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"node-hid": "^0.7.7"
+	},
+	"devDependencies": {
+		"@types/node-hid": "^0.7.0",
+		"typescript": "^3.3.3333"
+	}
+}
