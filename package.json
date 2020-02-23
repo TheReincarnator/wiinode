@@ -4,11 +4,14 @@
 	"description": "",
 	"main": "lib/index.js",
 	"scripts": {
-		"build": "tsc src/index.ts --outDir lib",
-		"start": "node lib/index.js"
+		"build": "tsc",
+		"watch": "tsc --watch"
 	},
 	"author": "",
 	"license": "ISC",
+	"engines": {
+		"node": ">=10.15.0"
+	},
 	"dependencies": {
 		"node-hid": "^0.7.7"
 	},

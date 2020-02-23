@@ -35,7 +35,7 @@ export class Remote {
 		this.hid.on("data", data => this.processData(data));
 	}
 
-	public close(): void {
+	public disconnect(): void {
 		if (!this.hid) {
 			return;
 		}
@@ -45,6 +45,14 @@ export class Remote {
 
 		this.hid.close();
 		this.hid = undefined;
+
+		for (let i = 0; i < remotes.length; ) {
+			if (remotes[i] === this) {
+				remotes.splice(i, 1);
+			} else {
+				i++;
+			}
+		}
 	}
 
 	private notifyListeners(button: string, pressed: boolean): void {
@@ -217,6 +225,7 @@ export function scanRemotes(assignPlayers?: boolean): ScanResult {
 	if (assignPlayers === undefined) assignPlayers = true;
 
 	const devices = HID.devices().filter(device => {
+		console.log(device.manufacturer, device.product);
 		return (
 			device.vendorId === 0x057e &&
 			(device.productId === 0x0306 || device.productId === 0x0330)
@@ -257,7 +266,7 @@ export function scanRemotes(assignPlayers?: boolean): ScanResult {
 				delete result.players[disappeared.player];
 			}
 
-			disappeared.close();
+			disappeared.disconnect();
 			result.disappeared.push(disappeared);
 		}
 	});
@@ -279,5 +288,3 @@ export function scanRemotes(assignPlayers?: boolean): ScanResult {
 
 	return result;
 }
-
-scanRemotes();
